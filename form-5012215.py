@@ -1,29 +1,60 @@
 # http://www.123formbuilder.com/form-5012215/online-order-form
-import psutil
+import KillProcess
 from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
 import random
-from selenium.webdriver.common.by import By
+from time import sleep
 
 ## to clear the memory from the chromedriver.exe
-for proc in psutil.process_iter():
-    if proc.name() == 'chromedriver.exe':
-        proc.kill()
+# KillProcess.killproc('chromedriver.exe') #kill chromedriver.exe
 
 driver = webdriver.Chrome()
 driver.get("http://www.123formbuilder.com/form-5012215/online-order-form")
+driver.maximize_window()
 
 driver.find_element_by_xpath("//input[@placeholder='First']").send_keys('Aleksandr')
 driver.find_element_by_xpath("//input[@placeholder='Last']").send_keys('Kuzhelev')
-driver.find_element_by_xpath("//input[@type='email']").send_keys('qqqq@gmail.com')
-driver.find_element_by_xpath("//input[@placeholder='### ### #### ']").send_keys('1234567890')
-driver.find_element_by_id("0000000e_" + str(random.randint(0, 5))).click()
+driver.find_element_by_xpath("//input[@type='email']").send_keys(str(random.randrange(1000,9999))+'@gmail.com')
+driver.find_element_by_xpath("//input[@placeholder='### ### #### ']").send_keys(str(random.randrange(1,9999999999)).zfill(10))
+
+driver.find_element_by_tag_name('html').send_keys(Keys.PAGE_DOWN)
+
+driver.implicitly_wait(5)
+sleep(1)
+
+driver.find_element_by_id("0000000e_" + str(random.randint(0, 5))).click() #RADIO
+driver.implicitly_wait(5)
 driver.find_element_by_xpath("//input[@type='number']").send_keys(str(random.randint(1, 100)))
-driver.find_element_by_id('date-00000012-month').send_keys('3')
+driver.find_element_by_xpath("//body/form[@id='form']/div/div/div/div/div/div/div[2]").click()
+driver.implicitly_wait(5)
+driver.find_element_by_class_name("today ").click()
+driver.find_element_by_xpath("//input[@placeholder='Street Address']").send_keys('Lenin street')
+driver.find_element_by_xpath("//input[@placeholder='Street Address Line 2']").send_keys('Marx street')
+driver.find_element_by_xpath("//input[@placeholder='City']").send_keys('Cinci')
+driver.find_element_by_xpath("//input[@placeholder='Region']").send_keys('OH')
+driver.find_element_by_xpath("//input[@placeholder='Postal / Zip Code']").send_keys('11111')
+driver.find_element_by_xpath("//input[@placeholder='Country']").click()#send_keys('\n')
+driver.implicitly_wait(5)
+driver.find_element_by_xpath("//*[contains(text(), 'Zambia')]").click()
 
+driver.implicitly_wait(5)
 
+Select(driver.find_element_by_tag_name('select')).select_by_index(random.randint(0, 2))
 
+driver.find_element_by_tag_name('html').send_keys(Keys.PAGE_DOWN)
+driver.implicitly_wait(5)
+driver.find_element_by_tag_name('html').send_keys('\n')
+for i in range(3):
+    driver.find_element_by_id("00000018_"+str(random.randrange(0,2))).click()
 
+driver.find_element_by_id("00000018_3").click()
+driver.find_element_by_xpath("//input[@type='text'][@data-role='other']").send_keys('blablabla')
 
+frame = driver.find_element_by_xpath('//iframe[contains(@src, "recaptcha")]')
+driver.switch_to.frame(frame)
+driver.find_element_by_xpath("//*[@id='recaptcha-anchor']").click() #Jam!
 
+# driver.find_element_by_xpath("//button[@type='submit']").click()
 #driver.close()
 
