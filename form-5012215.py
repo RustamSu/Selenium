@@ -7,7 +7,7 @@ import random
 from time import sleep
 
 ## to clear the memory from the chromedriver.exe
-KillProcess.killproc('chromedriver.exe') #kill chromedriver.exe
+#KillProcess.killproc('chromedriver.exe') #kill chromedriver.exe #можно вставить для очистки памяти
 
 driver = webdriver.Chrome()
 driver.get("http://www.123formbuilder.com/form-5012215/online-order-form")
@@ -43,8 +43,8 @@ driver.find_element_by_xpath("//*[contains(text(), 'Zambia')]").click() #мож�
 driver.find_element_by_tag_name('html').send_keys(Keys.PAGE_DOWN)
 driver.implicitly_wait(5)
 
-Select(driver.find_element_by_tag_name('select')).select_by_index(random.randint(0, 2)) #simple select
-
+#Select(driver.find_element_by_tag_name('select')).select_by_index(random.randint(0, 2)) #simple select
+driver.find_element_by_xpath("//option[contains(text(),'Choice1')]").click() #или можно так, самый простой способ
 driver.find_element_by_tag_name('html').send_keys(Keys.PAGE_DOWN)
 driver.implicitly_wait(5)
 driver.find_element_by_tag_name('html').send_keys('\n')
