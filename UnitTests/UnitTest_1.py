@@ -74,7 +74,7 @@ class ChromeWindow(unittest.TestCase):
             WebDriverWait(driver, 3). \
                 until(EC.visibility_of_element_located((By.XPATH, "//a[contains(text(),'go back')]")))
             driver.find_element(By.XPATH, "//a[contains(text(),'go back')]").send_keys('\n')
-        except:
+        except TimeoutException:
             print('No GO BACK!')
             driver.quit()
         sleep(2)
@@ -121,13 +121,13 @@ class FFWindow(unittest.TestCase):
             WebDriverWait(driver, 10). \
                 until(EC.visibility_of_element_located((By.XPATH, "//button[@class='pushbutton-wide']")))
             driver.find_element(By.XPATH, "//button[@class='pushbutton-wide']").click()
-        except:
+        except TimeoutException:
             print('No SUBMIT!')
         try:
             WebDriverWait(driver, 10). \
                 until(EC.visibility_of_element_located((By.XPATH, "//a[contains(text(),'go back')]")))
             driver.find_element(By.XPATH, "//a[contains(text(),'go back')]").click()
-        except:
+        except TimeoutException:
             print('No GO BACK!')
             driver.quit()
         sleep(2)
