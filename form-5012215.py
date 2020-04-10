@@ -86,6 +86,6 @@ string1 = str("javascript:document.getElementById('g-recaptcha-response').value 
 driver.execute_script(string1)
 sleep(100)
 
-driver.find_element_by_xpath("//button[@type='submit']").click()
-#driver.close()
+#driver.find_element_by_xpath("//button[@type='submit']").click()
+driver.close()
 

@@ -19,9 +19,8 @@ if driver.find_element_by_xpath("//h2[contains(text(),'Send Us a Message')]").te
     driver.find_element_by_id("contact-form-comment-g2-message").send_keys('Hello Sergey!')
     driver.find_element_by_tag_name('html').send_keys(Keys.PAGE_DOWN)
     sleep(3)
-    #driver.find_element_by_class_name("pushbutton-wide").send_keys('\n')  #strange
-    #driver.find_element_by_class_name("pushbutton-wide").click()
-    driver.find_element_by_xpath("//button[@class='pushbutton-wide']").click()
+
+    #driver.find_element_by_xpath("//button[@class='pushbutton-wide']").click()
     sleep(3)
     #driver.find_element_by_xpath("//a[contains(text(),'go back')]").send_keys('\n')
     driver.find_element_by_xpath("//a[contains(text(),'go back')]").click()
