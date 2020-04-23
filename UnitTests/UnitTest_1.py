@@ -10,7 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 # *************************************************
-# Testing Chrome and FireFox
+# Testing Chrome
 # *************************************************
 
 
@@ -83,87 +83,9 @@ class ChromeWindow(unittest.TestCase):
         self.assertIn('California Real Estate – QA at Silicon Valley Real Estate', driver.title)
         print(driver.title, 'page was loaded End TestCase')
 
-    def tearDown(self):
-        self.driver.quit()
-
-
-class FFWindow(unittest.TestCase):
-
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        #self.driver.maximize_window() #use default resolution
-
-    def test_ffox(self):
-        driver = self.driver
-        driver.get("https://qasvus.wordpress.com/")
-        try:
-            WebDriverWait(driver, 5). \
-                until(
-                EC.visibility_of_element_located((By.XPATH, "//textarea[@id='contact-form-comment-g2-message']")))
-            print('OK Main page loaded', driver.name)
-        except TimeoutException:
-            print('Warning! Too mach time to load', driver.name)
-            driver.get_screenshot_as_file('Load_main_page_mach_time ' + driver.name + '.png')
-        self.assertIn('California Real Estate – QA at Silicon Valley Real Estate', driver.title)
-        print(driver.title, 'page was loaded')
-        elem = driver.find_element(By.XPATH, "//input[@id='g2-name']")
-        elem.clear()
-        elem.send_keys('test_name')
-        elem = driver.find_element(By.XPATH, "//input[@id='g2-email']")
-        elem.clear()
-        elem.send_keys('test_email@gmail.com')
-        elem = driver.find_element(By.XPATH, "//textarea[@id='contact-form-comment-g2-message']")
-        elem.clear()
-        elem.send_keys('test_memo')
-        driver.find_element_by_tag_name('html').send_keys(Keys.PAGE_DOWN)
-        sleep(3)
-        try:
-            WebDriverWait(driver, 10). \
-                until(EC.visibility_of_element_located((By.XPATH, "//button[@class='pushbutton-wide']")))
-            driver.find_element(By.XPATH, "//button[@class='pushbutton-wide']").click()
-        except TimeoutException:
-            print('No SUBMIT!')
-        try:
-            WebDriverWait(driver, 10). \
-                until(EC.visibility_of_element_located((By.XPATH, "//a[contains(text(),'go back')]")))
-            driver.find_element(By.XPATH, "//a[contains(text(),'go back')]").click()
-        except TimeoutException:
-            print('No GO BACK!')
-            driver.quit()
-        sleep(2)
-        WebDriverWait(driver, 5). \
-            until(EC.visibility_of_all_elements_located((By.XPATH, "//img[contains(@class,'wp-image')]")))
-        self.assertIn('California Real Estate – QA at Silicon Valley Real Estate', driver.title)
-        print(driver.title, 'page was loaded End TestCase')
-
-    def test_window_ffox_1120x850(self):
-        driver = self.driver
-        driver.get("https://qasvus.wordpress.com/")
-        driver.set_window_size(1120, 850)
-        try:
-            WebDriverWait(driver, 5). \
-                until(EC.visibility_of_element_located((By.XPATH, "//img[@class='custom-logo']")))
-            print('OK Main page loaded 1120x850', driver.name)
-        except TimeoutException:
-            print('Warning! Too mach time to load 1120x850', driver.name)
-            driver.get_screenshot_as_file('Load_main_page_mach_time_1120x550' + driver.name + '.png')
-        sleep(2)
-
-    def test_window_ffox_max(self):
-        driver = self.driver
-        driver.get("https://qasvus.wordpress.com/")
-        driver.maximize_window()
-        try:
-            WebDriverWait(driver, 5). \
-                until(EC.visibility_of_element_located((By.XPATH, "//img[@class='custom-logo']")))
-            print('OK Main page loaded max', driver.name)
-        except TimeoutException:
-            print('Warning! Too mach time to load max', driver.name)
-            driver.get_screenshot_as_file('Load_main_page_mach_time_max' + driver.name + '.png')
-        sleep(2)
-
-    def tearDown(self):
-        self.driver.quit()
+    @classmethod  # важно
+    def tearDownClass(cls):
+        cls.driver.quit()
 
 
 if __name__ == '__main__':
